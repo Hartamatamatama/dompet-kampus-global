@@ -7,3 +7,4 @@ flutter_*.log
 .metadata
 **.DS_Store
 __MACOSX/
+.hermes-tmp*
