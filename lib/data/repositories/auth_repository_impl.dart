@@ -1,3 +1,5 @@
+Implementation of AuthRepository backed by remote datasource and secure storage.
+===
 import '../../core/error/exceptions.dart';
 import '../../core/error/failures.dart';
 import '../../domain/entities/user_entity.dart';
