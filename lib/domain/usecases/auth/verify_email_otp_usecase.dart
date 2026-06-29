@@ -1,3 +1,5 @@
+Use case: verify email using OTP code.
+===
 import '../../repositories/auth_repository.dart';
 
 class VerifyEmailOtpUsecase {
