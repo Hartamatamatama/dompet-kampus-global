@@ -1,3 +1,5 @@
+/// Error handling types for exceptions.
+===
 class ServerException implements Exception {
   final String message;
   final String? errorCode;
