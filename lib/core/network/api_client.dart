@@ -75,6 +75,7 @@ class ApiClient {
 
   Map<String, dynamic> _handleResponse(Response response) {
     final data = response.data as Map<String, dynamic>;
+    // Server returned success=false — treat as application-level failure
     if (data['success'] == false) {
       final errorCode = data['error_code'] as String?;
       final message = data['message'] as String? ?? 'Terjadi kesalahan.';
