@@ -4,7 +4,7 @@ class AppConstants {
 
   // API - Diperbarui ke IP Laptop dan Port Backend Golang yang benar
   // static const String baseUrl = 'http://192.168.10.110:8080';
-  static const String baseUrl = 'http://10.0.2.2:8080';
+  static const String baseUrl = 'http://192.168.10.110:8080';
   static const String apiVersion = '/v1';
   static const int connectTimeout = 30;
   static const int receiveTimeout = 30;
