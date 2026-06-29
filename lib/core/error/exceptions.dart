@@ -1,5 +1,6 @@
 /// Error handling types for exceptions.
 ===
+/// Exception thrown when the backend returns a non-200 status code.
 class ServerException implements Exception {
   final String message;
   final String? errorCode;
