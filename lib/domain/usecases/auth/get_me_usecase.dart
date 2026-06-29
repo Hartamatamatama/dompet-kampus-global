@@ -1,5 +1,3 @@
-Use case: fetch the current authenticated user profile.
-===
 import '../../repositories/auth_repository.dart';
 import '../../entities/user_entity.dart';
 

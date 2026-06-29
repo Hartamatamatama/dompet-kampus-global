@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-/// Custom BlocObserver that logs all state transitions and events for debugging.
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBlocObserver extends BlocObserver {

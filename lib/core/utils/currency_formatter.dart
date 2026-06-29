@@ -1,9 +1,7 @@
 import 'package:intl/intl.dart';
 
-/// Utility for formatting currency values in Indonesian Rupiah format.
-/// Handles both full formatting and balance masking for privacy.
 class CurrencyFormatter {
-  static String format(double amount) {
+  static final _formatter = NumberFormat('#,###', 'id_ID');
 
   static String format(double amount, {bool withSymbol = true}) {
     final formatted = _formatter.format(amount.abs().round());

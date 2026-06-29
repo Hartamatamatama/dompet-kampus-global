@@ -1,5 +1,3 @@
-Implementation of OtpRepository that coordinates OTP datasource calls.
-===
 import '../../core/error/exceptions.dart';
 import '../../core/error/failures.dart';
 import '../../domain/entities/otp_entity.dart';

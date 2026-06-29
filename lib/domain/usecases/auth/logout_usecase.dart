@@ -1,5 +1,3 @@
-Use case: log out and clear local session.
-===
 import '../../repositories/auth_repository.dart';
 
 class LogoutUsecase {

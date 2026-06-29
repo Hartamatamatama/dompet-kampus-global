@@ -1,5 +1,3 @@
-Use cases: top-up and transfer operations.
-===
 import '../../repositories/payment_repository.dart';
 import '../../entities/payment_result_entity.dart';
 

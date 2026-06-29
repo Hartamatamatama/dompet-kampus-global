@@ -1,5 +1,3 @@
-Implementation of AccountRepository that fetches account and transaction data.
-===
 import '../../core/error/exceptions.dart';
 import '../../core/error/failures.dart';
 import '../../domain/entities/account_entity.dart';

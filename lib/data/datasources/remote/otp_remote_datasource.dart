@@ -1,5 +1,3 @@
-Remote data source for OTP delivery and verification.
-===
 import '../../../core/constants/api_endpoints.dart';
 import '../../../core/network/api_client.dart';
 import '../../../domain/entities/otp_entity.dart';

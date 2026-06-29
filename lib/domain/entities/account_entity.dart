@@ -1,15 +1,18 @@
-/// Domain entity representing the user's financial account.
-/// Tracks balance linked to a specific payment platform.
-class AccountEntity {
+import 'package:equatable/equatable.dart';
+
+class AccountEntity extends Equatable {
   final int id;
-  final double balance;
-  final String? platform;
   final int userId;
+  final double balance;
+  final DateTime createdAt;
 
   const AccountEntity({
     required this.id,
+    required this.userId,
     required this.balance,
-    this.platform,
-    this.userId = 0,
+    required this.createdAt,
   });
+
+  @override
+  List<Object?> get props => [id, userId, balance, createdAt];
 }

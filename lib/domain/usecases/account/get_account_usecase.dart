@@ -1,5 +1,3 @@
-Use case: fetch current account balance and transactions.
-===
 import '../../repositories/account_repository.dart';
 import '../../entities/account_entity.dart';
 import '../../entities/transaction_entity.dart';

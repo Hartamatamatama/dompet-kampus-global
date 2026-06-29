@@ -2,8 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/error/exceptions.dart';
 
-abstract /// Abstraction over flutter_secure_storage for local credential persistence.
-class SecureStorageDatasource {
+abstract class SecureStorageDatasource {
   Future<void> saveToken(String token);
   Future<String?> getToken();
   Future<void> deleteToken();

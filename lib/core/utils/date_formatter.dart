@@ -1,6 +1,5 @@
 import 'package:intl/intl.dart';
 
-/// Utility for formatting dates in Indonesian locale style.
 class DateFormatter {
   static String format(DateTime dt) {
     final now = DateTime.now();
