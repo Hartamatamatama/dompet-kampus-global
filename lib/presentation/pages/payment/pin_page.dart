@@ -187,7 +187,9 @@ class _PinPageState extends State<PinPage> with SingleTickerProviderStateMixin {
                   transactionId: result.transactionId,
                 );
               }
-              context.go('/success', extra: {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!context.mounted) return;
+                context.go('/success', extra: {
                 'title': 'Pembayaran berhasil',
                 'subtitle': result.description,
                 'amount': result.amount,
@@ -197,8 +199,11 @@ class _PinPageState extends State<PinPage> with SingleTickerProviderStateMixin {
                   ['Ref', 'DKG${result.transactionId}'],
                 ],
               });
+              });
             } else if (state is PaymentTopupSuccess) {
-              context.go('/success', extra: {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!context.mounted) return;
+                context.go('/success', extra: {
                 'title': 'Top up berhasil',
                 'subtitle': 'Saldo kamu bertambah',
                 'amount': state.amount,
@@ -206,6 +211,7 @@ class _PinPageState extends State<PinPage> with SingleTickerProviderStateMixin {
                   ['Jumlah', CurrencyFormatter.format(state.amount)],
                   ['Saldo sekarang', CurrencyFormatter.format(state.balance)],
                 ],
+              });
               });
             } else if (state is PaymentInvalidOtp) {
               setState(() {

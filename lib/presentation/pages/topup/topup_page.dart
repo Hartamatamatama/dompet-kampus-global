@@ -30,14 +30,17 @@ class _TopUpPageState extends State<TopUpPage> {
     return BlocListener<PaymentBloc, PaymentState>(
       listener: (context, state) {
         if (state is PaymentTopupSuccess) {
-          context.go('/success', extra: {
-            'title': 'Top up berhasil',
-            'subtitle': 'Saldo kamu bertambah',
-            'amount': state.amount,
-            'lines': [
-              ['Metode', _methodName()],
-              ['Saldo sekarang', CurrencyFormatter.format(state.balance)],
-            ],
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!context.mounted) return;
+            context.go('/success', extra: {
+              'title': 'Top up berhasil',
+              'subtitle': 'Saldo kamu bertambah',
+              'amount': state.amount,
+              'lines': [
+                ['Metode', _methodName()],
+                ['Saldo sekarang', CurrencyFormatter.format(state.balance)],
+              ],
+            });
           });
         } else if (state is PaymentError) {
           ScaffoldMessenger.of(context).showSnackBar(
