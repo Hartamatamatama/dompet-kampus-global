@@ -1,4 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+/// Dependency injection container — registers all blocs, usecases, repositories,
+/// datasources, and external services via GetIt.
 import 'package:get_it/get_it.dart';
 import '../core/constants/app_constants.dart';
 import '../core/network/api_client.dart';
