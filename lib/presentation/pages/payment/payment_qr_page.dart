@@ -166,7 +166,7 @@ class _PaymentQrPageState extends State<PaymentQrPage> {
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Icon(
-                        label == 'Bayar' ? DkgIcons.qris : DkgIcons.qris,
+                        label == 'Bayar' ? DkgIcons.scan : DkgIcons.qris,
                         size: 22,
                         color: Colors.white,
                       ),

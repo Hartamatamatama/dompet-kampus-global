@@ -300,7 +300,7 @@ class _ErrorView extends StatelessWidget {
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: const Center(
-                  child: Icon(Icons.link_off_rounded, size: 30, color: AppColors.red),
+                  child: Icon(DkgIcons.xcircle, size: 30, color: AppColors.red),
                 ),
               ),
               const SizedBox(height: 18),

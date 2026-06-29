@@ -24,7 +24,7 @@ class PinPage extends StatefulWidget {
   State<PinPage> createState() => _PinPageState();
 }
 
-class _PinPageState extends State<PinPage> {
+class _PinPageState extends State<PinPage> with SingleTickerProviderStateMixin {
   _Step _step = _Step.pin;
   String _pin = '';
   String _otpCode = '';
@@ -37,9 +37,24 @@ class _PinPageState extends State<PinPage> {
   int _resendTimer = AppConstants.otpResendSeconds;
   Timer? _countdown;
 
+  late AnimationController _fadeCtrl;
+  late Animation<double> _fadeAnim;
+
+  @override
+  void initState() {
+    super.initState();
+    _fadeCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    _fadeAnim = CurvedAnimation(parent: _fadeCtrl, curve: Curves.easeInOut);
+    _fadeCtrl.forward();
+  }
+
   @override
   void dispose() {
     _countdown?.cancel();
+    _fadeCtrl.dispose();
     super.dispose();
   }
 
@@ -71,6 +86,7 @@ class _PinPageState extends State<PinPage> {
       _busy = false;
       _step = _Step.otp;
     });
+    _fadeCtrl.forward(from: 0);
 
     if (_twoFaMethod == AppConstants.twoFaSmtp) {
       context.read<OtpBloc>().add(OtpSendEmail());
@@ -245,68 +261,122 @@ class _PinPageState extends State<PinPage> {
         ),
       ],
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.bg,
         body: SafeArea(
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8, top: 8),
-                  child: GestureDetector(
-                    onTap: () {
-                      if (_step == _Step.otp && !_busy) {
-                        _countdown?.cancel();
-                        setState(() {
-                          _step = _Step.pin;
-                          _pin = '';
-                          _otpCode = '';
-                        });
-                      } else {
-                        final cb = _callbackUrl;
-                        if (cb != null) {
-                          DeeplinkCallbackService.notifyCancelled(
-                            callbackUrl: cb,
-                            reference: _callbackReference,
-                          );
-                        }
-                        context.go('/home');
-                      }
-                    },
-                    child: Container(
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: AppColors.primarySurface,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Icon(DkgIcons.close, size: 18, color: AppColors.primary),
+              // Header with gradient background
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: AppColors.primaryGradient,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(28),
+                    bottomRight: Radius.circular(28),
+                  ),
+                ),
+                padding: const EdgeInsets.fromLTRB(4, 8, 4, 28),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(DkgIcons.close, color: Colors.white),
+                          onPressed: () {
+                            if (_step == _Step.otp && !_busy) {
+                              _countdown?.cancel();
+                              setState(() {
+                                _step = _Step.pin;
+                                _pin = '';
+                                _otpCode = '';
+                              });
+                              _fadeCtrl.forward(from: 0);
+                            } else {
+                              // Kirim callback cancelled jika user membatalkan dari flow deeplink.
+                              final cb = _callbackUrl;
+                              if (cb != null) {
+                                DeeplinkCallbackService.notifyCancelled(
+                                  callbackUrl: cb,
+                                  reference: _callbackReference,
+                                );
+                              }
+                              context.go('/home');
+                            }
+                          },
+                        ),
+                        const Expanded(
+                          child: Text('Keamanan Transaksi',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'PlusJakartaSans',
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              )),
+                        ),
+                        const SizedBox(width: 48),
+                      ],
                     ),
+                    const SizedBox(height: 8),
+                    if (_step == _Step.pin) ...[
+                      Container(
+                        width: 52,
+                        height: 52,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.18),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: const Center(
+                          child: Icon(DkgIcons.lock, size: 26, color: Colors.white),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text('Masukkan PIN',
+                          style: TextStyle(
+                            fontFamily: 'PlusJakartaSans',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          )),
+                      const SizedBox(height: 4),
+                      Text('6 digit PIN keamanan akun kamu',
+                          style: TextStyle(
+                            fontFamily: 'PlusJakartaSans',
+                            fontSize: 13,
+                            color: Colors.white.withValues(alpha: 0.7),
+                          )),
+                    ] else ...[
+                      const SizedBox(height: 20),
+                    ],
+                  ],
+                ),
+              ),
+              // Content
+              Expanded(
+                child: AnimatedBuilder(
+                  animation: _fadeAnim,
+                  builder: (_, __) => Opacity(
+                    opacity: _fadeAnim.value,
+                    child: _busy
+                        ? const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircularProgressIndicator(color: AppColors.primary),
+                              SizedBox(height: 18),
+                              Text('Memproses transaksi…',
+                                  style: TextStyle(
+                                    fontFamily: 'PlusJakartaSans',
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.slate600,
+                                  )),
+                            ],
+                          )
+                        : _step == _Step.pin
+                            ? _buildPinStep()
+                            : _buildOtpStep(),
                   ),
                 ),
               ),
-              if (_busy) ...[
-                const Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(color: AppColors.primary),
-                      SizedBox(height: 18),
-                      Text('Memproses transaksi…',
-                          style: TextStyle(
-                            fontFamily: 'PlusJakartaSans',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.slate600,
-                          )),
-                    ],
-                  ),
-                ),
-              ] else if (_step == _Step.pin) ...[
-                Expanded(child: _buildPinStep()),
-              ] else ...[
-                Expanded(child: _buildOtpStep()),
-              ],
             ],
           ),
         ),
@@ -316,47 +386,59 @@ class _PinPageState extends State<PinPage> {
 
   Widget _buildPinStep() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 10, 24, 24),
+      padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
       child: Column(
         children: [
-          Container(
-            width: 54,
-            height: 54,
-            decoration: BoxDecoration(
-              color: AppColors.primarySurface,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: const Center(child: Icon(DkgIcons.lock, size: 26, color: AppColors.primary)),
-          ),
-          const SizedBox(height: 16),
-          const Text('Masukkan PIN',
-              style: TextStyle(
-                fontFamily: 'PlusJakartaSans',
-                fontSize: 21,
-                fontWeight: FontWeight.w800,
-                color: AppColors.ink,
-              )),
-          const SizedBox(height: 6),
-          const Text('Masukkan 6 digit PIN keamanan kamu',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 13.5, color: AppColors.slate500)),
           const Spacer(),
           PinPad(
             value: _pin,
             onChanged: (v) => setState(() => _pin = v),
             onComplete: _onPinComplete,
           ),
-          const SizedBox(height: 18),
-          const Text.rich(TextSpan(
+          const SizedBox(height: 12),
+          Text.rich(TextSpan(
             text: 'Lupa PIN? ',
-            style: TextStyle(fontFamily: 'PlusJakartaSans', fontSize: 12.5, color: AppColors.slate400),
+            style: TextStyle(
+              fontFamily: 'PlusJakartaSans',
+              fontSize: 12.5,
+              color: AppColors.slate400,
+            ),
             children: [
               TextSpan(
                 text: 'Reset',
-                style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700),
+                style: TextStyle(
+                  fontFamily: 'PlusJakartaSans',
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ],
           )),
+          const SizedBox(height: 8),
+          // Amount summary pill at bottom
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            decoration: BoxDecoration(
+              color: AppColors.primarySurface,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(DkgIcons.shieldCheck, size: 14, color: AppColors.primary),
+                const SizedBox(width: 6),
+                Text(
+                  'Total ${CurrencyFormatter.format((widget.flowData['amount'] as num?)?.toDouble() ?? 0)}',
+                  style: const TextStyle(
+                    fontFamily: 'PlusJakartaSans',
+                    fontSize: 12.5,
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -369,6 +451,7 @@ class _PinPageState extends State<PinPage> {
       padding: const EdgeInsets.fromLTRB(28, 8, 28, 24),
       child: Column(
         children: [
+          const SizedBox(height: 10),
           FeatureIcon(icon: header.icon, tone: header.tone, size: 74, iconSize: 36),
           const SizedBox(height: 18),
           Text(header.title,

@@ -110,7 +110,7 @@ class MerchantCheckoutPage extends StatelessWidget {
                                         color: const Color(0xFFFFF1E9),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      child: const Center(child: Icon(Icons.shopping_bag_outlined, size: 22, color: _orange)),
+                                      child: const Center(child: Icon(DkgIcons.store, size: 22, color: _orange)),
                                     ),
                                     const SizedBox(width: 12),
                                     Expanded(
