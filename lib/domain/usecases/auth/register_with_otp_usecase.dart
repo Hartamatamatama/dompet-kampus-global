@@ -1,3 +1,5 @@
+Use case: register a new account using email OTP.
+===
 import '../../repositories/auth_repository.dart';
 import '../../entities/user_entity.dart';
 
