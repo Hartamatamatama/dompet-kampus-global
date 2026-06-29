@@ -58,7 +58,7 @@ class PaymentDeeplinkPage extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.close_rounded, color: Colors.white),
+                  icon: const Icon(DkgIcons.close, color: Colors.white),
                   onPressed: () => _cancel(context, payload),
                 ),
                 const Expanded(
@@ -78,7 +78,7 @@ class PaymentDeeplinkPage extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.storefront_outlined, size: 14, color: Colors.white),
+                      const Icon(DkgIcons.store, size: 14, color: Colors.white),
                       const SizedBox(width: 6),
                       Text(payload.merchantName,
                           style: const TextStyle(
@@ -192,7 +192,7 @@ class PaymentDeeplinkPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
+                        const Icon(DkgIcons.check, size: 20, color: AppColors.primary),
                       ],
                     ),
                   ),

@@ -32,7 +32,7 @@ class MerchantCheckoutPage extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+                  icon: const Icon(DkgIcons.arrowLeft, color: Colors.white, size: 20),
                   onPressed: () => context.go('/home'),
                 ),
                 const Expanded(
@@ -52,7 +52,7 @@ class MerchantCheckoutPage extends StatelessWidget {
                   ),
                   child: const Row(
                     children: [
-                      Icon(Icons.storefront_outlined, size: 14, color: Colors.white),
+                      Icon(DkgIcons.store, size: 14, color: Colors.white),
                       SizedBox(width: 6),
                       Text('TokoBelanja',
                           style: TextStyle(
@@ -193,7 +193,7 @@ class MerchantCheckoutPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
+                        const Icon(DkgIcons.check, size: 20, color: AppColors.primary),
                       ],
                     ),
                   ),

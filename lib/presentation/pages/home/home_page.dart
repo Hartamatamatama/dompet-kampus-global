@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                                     color: Colors.white.withValues(alpha: 0.18),
                                     borderRadius: BorderRadius.circular(14),
                                   ),
-                                  child: const Icon(Icons.notifications_outlined,
+                                  child: const Icon(DkgIcons.bell,
                                       size: 21, color: Colors.white),
                                 ),
                                 Positioned(
@@ -164,9 +164,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildBalanceCard(double balance, bool loading) {
     final actions = [
-      {'icon': Icons.north_rounded, 'label': 'Top Up', 'tone': 'blue', 'route': '/topup'},
-      {'icon': Icons.send_rounded, 'label': 'Transfer', 'tone': 'green', 'route': '/transfer'},
-      {'icon': Icons.qr_code_rounded, 'label': 'Bayar', 'tone': 'violet', 'route': '/payment'},
+      {'icon': DkgIcons.topup, 'label': 'Top Up', 'tone': 'blue', 'route': '/topup'},
+      {'icon': DkgIcons.send, 'label': 'Transfer', 'tone': 'green', 'route': '/transfer'},
+      {'icon': DkgIcons.qris, 'label': 'Bayar', 'tone': 'violet', 'route': '/payment'},
       {'icon': Icons.south_rounded, 'label': 'Tarik', 'tone': 'amber', 'route': '/topup'},
     ];
 
@@ -205,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: const Row(
                     children: [
-                      Icon(Icons.add_rounded, size: 15, color: AppColors.primary),
+                      Icon(DkgIcons.plus, size: 15, color: AppColors.primary),
                       SizedBox(width: 5),
                       Text('Isi Saldo',
                           style: TextStyle(
@@ -235,7 +235,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(width: 10),
               IconButton(
-                icon: Icon(_hideBalance ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                icon: Icon(_hideBalance ? DkgIcons.eyeOff : DkgIcons.eye,
                     size: 20, color: AppColors.slate400),
                 onPressed: () => setState(() => _hideBalance = !_hideBalance),
                 padding: const EdgeInsets.all(4),
@@ -298,7 +298,7 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: [
                 const FeatureIcon(
-                    icon: Icons.star_outline_rounded, tone: 'amber', size: 38, iconSize: 19),
+                    icon: DkgIcons.star, tone: 'amber', size: 38, iconSize: 19),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -333,7 +333,7 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: [
                 const FeatureIcon(
-                    icon: Icons.qr_code_rounded, tone: 'green', size: 38, iconSize: 19),
+                    icon: DkgIcons.qris, tone: 'green', size: 38, iconSize: 19),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -362,14 +362,14 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildFeatureGrid() {
     final features = [
-      {'icon': Icons.smartphone_outlined, 'label': 'Pulsa', 'tone': 'blue'},
+      {'icon': DkgIcons.pulsa, 'label': 'Pulsa', 'tone': 'blue'},
       {'icon': Icons.bolt_outlined, 'label': 'PLN', 'tone': 'amber'},
-      {'icon': Icons.restaurant_outlined, 'label': 'Kantin', 'tone': 'red'},
-      {'icon': Icons.receipt_long_outlined, 'label': 'UKT', 'tone': 'violet'},
+      {'icon': DkgIcons.food, 'label': 'Kantin', 'tone': 'red'},
+      {'icon': DkgIcons.splitBill, 'label': 'UKT', 'tone': 'violet'},
       {'icon': Icons.wifi_rounded, 'label': 'Paket Data', 'tone': 'green'},
-      {'icon': Icons.card_giftcard_rounded, 'label': 'Voucher', 'tone': 'red'},
+      {'icon': DkgIcons.gift, 'label': 'Voucher', 'tone': 'red'},
       {'icon': Icons.favorite_outline_rounded, 'label': 'Donasi', 'tone': 'amber'},
-      {'icon': Icons.more_horiz_rounded, 'label': 'Lainnya', 'tone': 'slate'},
+      {'icon': DkgIcons.more, 'label': 'Lainnya', 'tone': 'slate'},
     ];
     return Container(
       decoration: BoxDecoration(
@@ -445,7 +445,7 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.white.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  child: const Icon(Icons.link_rounded, size: 24, color: AppColors.gold),
+                  child: const Icon(DkgIcons.link, size: 24, color: AppColors.gold),
                 ),
                 const SizedBox(width: 13),
                 const Expanded(
@@ -469,7 +469,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_right_rounded, size: 20, color: Colors.white60),
+                const Icon(DkgIcons.chevRight, size: 20, color: Colors.white60),
               ],
             ),
           ],

@@ -70,7 +70,7 @@ class AccountPage extends StatelessWidget {
                         ),
                         child: const Row(
                           children: [
-                            Icon(Icons.verified_user_outlined, size: 14, color: Colors.white),
+                            Icon(DkgIcons.shieldCheck, size: 14, color: Colors.white),
                             SizedBox(width: 5),
                             Text('Terverifikasi',
                                 style: TextStyle(
@@ -111,7 +111,7 @@ class AccountPage extends StatelessWidget {
                         child: Column(
                           children: [
                             _Row(
-                              icon: Icons.verified_user_outlined,
+                              icon: DkgIcons.shieldCheck,
                               tone: 'green',
                               title: 'Verifikasi 2 langkah (2FA)',
                               subtitle: 'Aktif · Email OTP',
@@ -120,7 +120,7 @@ class AccountPage extends StatelessWidget {
                             ),
                             const Divider(height: 1, indent: 56, color: AppColors.line2),
                             _Row(
-                              icon: Icons.lock_outline_rounded,
+                              icon: DkgIcons.lock,
                               tone: 'blue',
                               title: 'Ubah PIN keamanan',
                               subtitle: 'Terakhir diubah 2 bln lalu',
@@ -128,7 +128,7 @@ class AccountPage extends StatelessWidget {
                             ),
                             const Divider(height: 1, indent: 56, color: AppColors.line2),
                             _Row(
-                              icon: Icons.fingerprint_rounded,
+                              icon: DkgIcons.fingerprint,
                               tone: 'violet',
                               title: 'Login biometrik',
                               subtitle: 'Sidik jari',
@@ -157,11 +157,11 @@ class AccountPage extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            _Row(icon: Icons.person_outline_rounded, tone: 'blue', title: 'Data pribadi', onTap: () {}),
+                            _Row(icon: DkgIcons.user, tone: 'blue', title: 'Data pribadi', onTap: () {}),
                             const Divider(height: 1, indent: 56, color: AppColors.line2),
-                            _Row(icon: Icons.account_balance_outlined, tone: 'green', title: 'Rekening & kartu tersimpan', onTap: () {}),
+                            _Row(icon: DkgIcons.bank, tone: 'green', title: 'Rekening & kartu tersimpan', onTap: () {}),
                             const Divider(height: 1, indent: 56, color: AppColors.line2),
-                            _Row(icon: Icons.settings_outlined, tone: 'slate', title: 'Pengaturan aplikasi', onTap: () {}),
+                            _Row(icon: DkgIcons.settings, tone: 'slate', title: 'Pengaturan aplikasi', onTap: () {}),
                           ],
                         ),
                       ),
@@ -179,7 +179,7 @@ class AccountPage extends StatelessWidget {
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.logout_rounded, size: 20, color: AppColors.red),
+                              Icon(DkgIcons.logout, size: 20, color: AppColors.red),
                               SizedBox(width: 9),
                               Text('Keluar',
                                   style: TextStyle(
@@ -265,7 +265,7 @@ class _Row extends StatelessWidget {
                 ],
               ),
             ),
-            right ?? const Icon(Icons.chevron_right_rounded, size: 18, color: AppColors.slate400),
+            right ?? const Icon(DkgIcons.chevRight, size: 18, color: AppColors.slate400),
           ],
         ),
       ),

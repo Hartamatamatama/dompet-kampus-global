@@ -251,28 +251,38 @@ class _PinPageState extends State<PinPage> {
             children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: IconButton(
-                  icon: const Icon(Icons.close_rounded, color: AppColors.ink),
-                  onPressed: () {
-                    if (_step == _Step.otp && !_busy) {
-                      _countdown?.cancel();
-                      setState(() {
-                        _step = _Step.pin;
-                        _pin = '';
-                        _otpCode = '';
-                      });
-                    } else {
-                      // Kirim callback cancelled jika user membatalkan dari flow deeplink.
-                      final cb = _callbackUrl;
-                      if (cb != null) {
-                        DeeplinkCallbackService.notifyCancelled(
-                          callbackUrl: cb,
-                          reference: _callbackReference,
-                        );
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, top: 8),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (_step == _Step.otp && !_busy) {
+                        _countdown?.cancel();
+                        setState(() {
+                          _step = _Step.pin;
+                          _pin = '';
+                          _otpCode = '';
+                        });
+                      } else {
+                        final cb = _callbackUrl;
+                        if (cb != null) {
+                          DeeplinkCallbackService.notifyCancelled(
+                            callbackUrl: cb,
+                            reference: _callbackReference,
+                          );
+                        }
+                        context.go('/home');
                       }
-                      context.go('/home');
-                    }
-                  },
+                    },
+                    child: Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        color: AppColors.primarySurface,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(DkgIcons.close, size: 18, color: AppColors.primary),
+                    ),
+                  ),
                 ),
               ),
               if (_busy) ...[
@@ -316,7 +326,7 @@ class _PinPageState extends State<PinPage> {
               color: AppColors.primarySurface,
               borderRadius: BorderRadius.circular(16),
             ),
-            child: const Center(child: Icon(Icons.lock_outline_rounded, size: 26, color: AppColors.primary)),
+            child: const Center(child: Icon(DkgIcons.lock, size: 26, color: AppColors.primary)),
           ),
           const SizedBox(height: 16),
           const Text('Masukkan PIN',
@@ -450,7 +460,7 @@ class _PinPageState extends State<PinPage> {
         );
       case AppConstants.twoFaNotif:
         return (
-          icon: Icons.notifications_outlined,
+          icon: DkgIcons.bell,
           tone: 'green',
           title: 'Masukkan Kode OTP',
           subtitle: 'Kami mengirim kode verifikasi ke notifikasi perangkat kamu.',

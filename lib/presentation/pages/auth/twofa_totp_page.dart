@@ -148,7 +148,7 @@ class _TwoFATotpPageState extends State<TwoFATotpPage> {
                   width: 172,
                   height: 172,
                   color: AppColors.bg,
-                  child: const Center(child: Icon(Icons.qr_code_rounded, size: 80, color: AppColors.slate400)),
+                  child: const Center(child: Icon(DkgIcons.qris, size: 80, color: AppColors.slate400)),
                 ),
               ),
             ),

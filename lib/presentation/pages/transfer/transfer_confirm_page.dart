@@ -139,7 +139,7 @@ class TransferConfirmPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Icon(Icons.check_rounded, size: 20, color: AppColors.primary),
+                        const Icon(DkgIcons.check, size: 20, color: AppColors.primary),
                       ],
                     ),
                   ),
@@ -152,7 +152,7 @@ class TransferConfirmPage extends StatelessWidget {
             color: AppColors.bg,
             child: AppButton(
               label: 'Konfirmasi & Bayar',
-              icon: const Icon(Icons.lock_outline_rounded, size: 19, color: Colors.white),
+              icon: const Icon(DkgIcons.lock, size: 19, color: Colors.white),
               onPressed: () => context.go('/pin', extra: {
                 'kind': 'transfer',
                 'recipient': recipient,

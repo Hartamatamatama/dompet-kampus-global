@@ -66,7 +66,7 @@ class _PaymentQrPageState extends State<PaymentQrPage> {
         child: Row(
           children: [
             IconButton(
-              icon: const Icon(Icons.close_rounded, color: Colors.white, size: 24),
+              icon: const Icon(DkgIcons.close, color: Colors.white, size: 24),
               onPressed: () => context.go('/home'),
             ),
             const Expanded(
@@ -135,7 +135,7 @@ class _PaymentQrPageState extends State<PaymentQrPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                _detected ? Icons.check_rounded : null,
+                _detected ? DkgIcons.check : null,
                 color: AppColors.green,
                 size: 16,
               ),
@@ -166,7 +166,7 @@ class _PaymentQrPageState extends State<PaymentQrPage> {
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Icon(
-                        label == 'Bayar' ? Icons.qr_code_rounded : Icons.qr_code_2_rounded,
+                        label == 'Bayar' ? DkgIcons.qris : Icons.qr_code_2_rounded,
                         size: 22,
                         color: Colors.white,
                       ),
@@ -209,7 +209,7 @@ class _PaymentQrPageState extends State<PaymentQrPage> {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  const FeatureIcon(icon: Icons.storefront_outlined, tone: 'violet', size: 52, iconSize: 26),
+                  const FeatureIcon(icon: DkgIcons.store, tone: 'violet', size: 52, iconSize: 26),
                   const SizedBox(width: 13),
                   Expanded(
                     child: Column(
@@ -244,7 +244,7 @@ class _PaymentQrPageState extends State<PaymentQrPage> {
               const SizedBox(height: 18),
               AppButton(
                 label: 'Bayar Sekarang',
-                icon: const Icon(Icons.lock_outline_rounded, size: 19, color: Colors.white),
+                icon: const Icon(DkgIcons.lock, size: 19, color: Colors.white),
                 onPressed: () {
                   setState(() => _sheetShown = true);
                   context.go('/pin', extra: {
