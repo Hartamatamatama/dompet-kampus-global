@@ -1,19 +1,23 @@
-import '../../domain/entities/account_entity.dart';
+/// Data-layer model for account API responses.
+class AccountModel {
+  final int id;
+  final double balance;
+  final String? platform;
+  final int userId;
 
-class AccountModel extends AccountEntity {
   const AccountModel({
-    required super.id,
-    required super.userId,
-    required super.balance,
-    required super.createdAt,
+    required this.id,
+    required this.balance,
+    this.platform,
+    this.userId = 0,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) {
     return AccountModel(
-      id: (json['id'] as num).toInt(),
-      userId: (json['user_id'] as num).toInt(),
-      balance: (json['balance'] as num).toDouble(),
-      createdAt: DateTime.tryParse(json['created_at'] as String? ?? '') ?? DateTime.now(),
+      id: json['id'] as int? ?? 0,
+      balance: (json['balance'] as num?)?.toDouble() ?? 0.0,
+      platform: json['platform'] as String?,
+      userId: json['user_id'] as int? ?? 0,
     );
   }
 }

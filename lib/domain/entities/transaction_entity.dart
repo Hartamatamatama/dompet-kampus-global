@@ -1,31 +1,20 @@
-import 'package:equatable/equatable.dart';
-
-enum TransactionType { credit, debit }
-
-class TransactionEntity extends Equatable {
+/// Domain entity for a single financial transaction.
+/// Supports both credit (in) and debit (out) types.
+class TransactionEntity {
   final int id;
-  final int accountId;
   final double amount;
-  final TransactionType type;
+  final String type;
   final String description;
-  final double balanceBefore;
-  final double balanceAfter;
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   const TransactionEntity({
     required this.id,
-    required this.accountId,
     required this.amount,
     required this.type,
     required this.description,
-    required this.balanceBefore,
-    required this.balanceAfter,
-    required this.createdAt,
+    this.createdAt,
   });
 
-  bool get isCredit => type == TransactionType.credit;
-  double get signedAmount => isCredit ? amount : -amount;
-
-  @override
-  List<Object?> get props => [id, accountId, amount, type, description, createdAt];
+  bool get isCredit => type == 'credit' || type == 'in';
+  bool get isDebit => type == 'debit' || type == 'out';
 }

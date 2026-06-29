@@ -1,41 +1,16 @@
-import 'package:equatable/equatable.dart';
-
-class PaymentResultEntity extends Equatable {
-  final String title;
-  final String subtitle;
+/// Domain entity returned after a successful payment or top-up.
+class PaymentResultEntity {
   final double amount;
-  final List<List<String>> lines;
-  final String kind;
-
-  const PaymentResultEntity({
-    required this.title,
-    required this.subtitle,
-    required this.amount,
-    required this.lines,
-    required this.kind,
-  });
-
-  @override
-  List<Object?> get props => [title, subtitle, amount, lines, kind];
-}
-
-class TransferResultEntity extends Equatable {
-  final int transactionId;
-  final double amount;
-  final String description;
   final double balanceBefore;
   final double balanceAfter;
-  final DateTime createdAt;
+  final int? transactionId;
+  final String? description;
 
-  const TransferResultEntity({
-    required this.transactionId,
+  const PaymentResultEntity({
     required this.amount,
-    required this.description,
     required this.balanceBefore,
     required this.balanceAfter,
-    required this.createdAt,
+    this.transactionId,
+    this.description,
   });
-
-  @override
-  List<Object?> get props => [transactionId, amount, description, balanceBefore, balanceAfter];
 }

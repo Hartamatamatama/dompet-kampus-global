@@ -1,47 +1,29 @@
-import 'dart:convert';
-import '../../domain/entities/user_entity.dart';
+/// Data-layer model for user API responses.
+class UserModel {
+  final int id;
+  final String name;
+  final String email;
+  final String? phone;
+  final bool emailVerified;
+  final bool totpEnabled;
 
-class UserModel extends UserEntity {
   const UserModel({
-    required super.id,
-    required super.firebaseUid,
-    required super.email,
-    required super.name,
-    required super.role,
-    required super.emailVerified,
-    required super.totpEnabled,
-    super.twoFaMethod,
+    required this.id,
+    required this.name,
+    required this.email,
+    this.phone,
+    this.emailVerified = false,
+    this.totpEnabled = false,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: (json['id'] as num).toInt(),
-      firebaseUid: json['firebase_uid'] as String? ?? '',
-      email: json['email'] as String? ?? '',
+      id: json['id'] as int? ?? 0,
       name: json['name'] as String? ?? '',
-      role: json['role'] as String? ?? 'user',
+      email: json['email'] as String? ?? '',
+      phone: json['phone'] as String?,
       emailVerified: json['email_verified'] as bool? ?? false,
       totpEnabled: json['totp_enabled'] as bool? ?? false,
-      twoFaMethod: json['two_fa_method'] as String?,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'firebase_uid': firebaseUid,
-      'email': email,
-      'name': name,
-      'role': role,
-      'email_verified': emailVerified,
-      'totp_enabled': totpEnabled,
-      'two_fa_method': twoFaMethod,
-    };
-  }
-
-  String toJsonString() => jsonEncode(toJson());
-
-  static UserModel fromJsonString(String jsonString) {
-    return UserModel.fromJson(jsonDecode(jsonString) as Map<String, dynamic>);
   }
 }
