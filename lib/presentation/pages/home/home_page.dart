@@ -279,7 +279,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Row(
               children: [
-                const Icon(DkgIcons.apps, size: 18, color: AppColors.slate600),
+                const Icon(DkgIcons.more, size: 18, color: AppColors.slate600),
                 const SizedBox(width: 8),
                 const Text('Fitur Unggulan',
                     style: TextStyle(
@@ -454,7 +454,7 @@ class _HomePageState extends State<HomePage> {
             ),
           )
         else
-          ...recent.map((tx) => TransactionRow(tx: tx)),
+          ...recent.map((tx) => TransactionRow(txn: tx)),
       ],
     );
   }
