@@ -27,9 +27,9 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (height, fontSize, radius, px) = switch (size) {
-      AppButtonSize.lg => (54.0, 16.0, 16.0, 20.0),
-      AppButtonSize.md => (46.0, 15.0, 14.0, 16.0),
-      AppButtonSize.sm => (38.0, 13.5, 11.0, 13.0),
+      AppButtonSize.lg => (52.0, 16.0, 26.0, 24.0),
+      AppButtonSize.md => (44.0, 15.0, 22.0, 20.0),
+      AppButtonSize.sm => (36.0, 13.5, 18.0, 16.0),
     };
 
     final (bg, fg, shadow, border) = _resolveStyle();
@@ -76,7 +76,7 @@ class AppButton extends StatelessWidget {
                   fontSize: fontSize,
                   fontWeight: FontWeight.w700,
                   color: fg,
-                  letterSpacing: 0.1,
+                  letterSpacing: 0.2,
                 ),
               ),
             ],

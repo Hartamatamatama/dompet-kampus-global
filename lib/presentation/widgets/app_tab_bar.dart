@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
-import 'feature_icon.dart';
+import '../../core/theme/dkg_icons.dart';
 
 class AppTabBar extends StatelessWidget {
   final String active;
@@ -20,13 +20,7 @@ class AppTabBar extends StatelessWidget {
       height: 64 + MediaQuery.of(context).padding.bottom,
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
-            blurRadius: 20,
-            offset: const Offset(0, -4),
-          ),
-        ],
+        border: Border(top: BorderSide(color: AppColors.line2, width: 1)),
       ),
       child: SafeArea(
         top: false,
@@ -34,20 +28,35 @@ class AppTabBar extends StatelessWidget {
           children: [
             _TabItem(icon: DkgIcons.home, label: 'Home', tabKey: 'home', active: active, onTap: onTab),
             _TabItem(icon: DkgIcons.history, label: 'Riwayat', tabKey: 'history', active: active, onTap: onTab),
-            // Center scan button
+            // Center scan button — elevated
             Expanded(
               child: Center(
                 child: GestureDetector(
                   onTap: onScan,
                   child: Container(
-                    width: 56,
-                    height: 56,
+                    width: 52,
+                    height: 52,
+                    margin: const EdgeInsets.only(bottom: 6),
                     decoration: BoxDecoration(
-                      gradient: AppColors.primaryGradient,
-                      shape: BoxShape.circle,
-                      boxShadow: AppColors.shadowPrimary,
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppColors.primaryLight,
+                          AppColors.primary,
+                          AppColors.primaryDark,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.4),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                    child: const Icon(DkgIcons.scan, color: Colors.white, size: 26),
+                    child: const Icon(DkgIcons.scan, color: Colors.white, size: 24),
                   ),
                 ),
               ),
@@ -83,25 +92,34 @@ class _TabItem extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onTap(tabKey),
         behavior: HitTestBehavior.opaque,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 24,
-              color: isActive ? AppColors.primary : AppColors.slate400,
-            ),
-            const SizedBox(height: 3),
-            Text(
-              label,
-              style: TextStyle(
-                fontFamily: 'PlusJakartaSans',
-                fontSize: 11,
-                fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          margin: const EdgeInsets.symmetric(vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          decoration: BoxDecoration(
+            color: isActive ? AppColors.primarySurface : Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 22,
                 color: isActive ? AppColors.primary : AppColors.slate400,
               ),
-            ),
-          ],
+              const SizedBox(height: 2),
+              Text(
+                label,
+                style: TextStyle(
+                  fontFamily: 'PlusJakartaSans',
+                  fontSize: 10,
+                  fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
+                  color: isActive ? AppColors.primary : AppColors.slate400,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

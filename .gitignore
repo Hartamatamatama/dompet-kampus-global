@@ -8,3 +8,10 @@ flutter_*.log
 **.DS_Store
 __MACOSX/
 .hermes-tmp*
+
+.vscode/templates
+
+# Generated files
+.flutter-plugins*
+android/.gitignore
+

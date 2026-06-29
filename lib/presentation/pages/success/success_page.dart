@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/dkg_icons.dart';
 import '../../../core/utils/currency_formatter.dart';
 import '../../blocs/account/account_bloc.dart';
 import '../../widgets/app_button.dart';
-import '../../widgets/feature_icon.dart';
-import '../../widgets/success_check.dart';
 
 class SuccessPage extends StatefulWidget {
   final String title;
@@ -30,61 +29,119 @@ class _SuccessPageState extends State<SuccessPage> {
   @override
   void initState() {
     super.initState();
-    // Refresh account data after successful transaction
     context.read<AccountBloc>().add(AccountRefreshRequested());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bg,
       body: SafeArea(
         child: Column(
           children: [
+            // Gradient top section
+            Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: AppColors.primaryGradient,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(28),
+                  bottomRight: Radius.circular(28),
+                ),
+              ),
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 20,
+                bottom: 40,
+              ),
+              child: Column(
+                children: [
+                  // Success icon
+                  Container(
+                    width: 72,
+                    height: 72,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      DkgIcons.check,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                      fontFamily: 'PlusJakartaSans',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                  if (widget.subtitle.isNotEmpty) ...[
+                    const SizedBox(height: 6),
+                    Text(
+                      widget.subtitle,
+                      style: TextStyle(
+                        fontFamily: 'PlusJakartaSans',
+                        fontSize: 14,
+                        color: Colors.white.withValues(alpha: 0.75),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            // Content
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(28, 24, 28, 0),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
                 child: Column(
                   children: [
-                    const Spacer(),
-                    const SuccessCheck(),
-                    const SizedBox(height: 24),
-                    Text(widget.title,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: 'PlusJakartaSans',
-                          fontSize: 24,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.ink,
-                          letterSpacing: -0.3,
-                        )),
-                    if (widget.subtitle.isNotEmpty) ...[
-                      const SizedBox(height: 8),
-                      Text(widget.subtitle,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: 'PlusJakartaSans',
-                            fontSize: 14.5,
-                            color: AppColors.slate500,
-                          )),
-                    ],
-                    const SizedBox(height: 20),
-                    Text(CurrencyFormatter.format(widget.amount),
-                        style: const TextStyle(
-                          fontFamily: 'PlusJakartaSans',
-                          fontSize: 36,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.ink,
-                          letterSpacing: -0.6,
-                        )),
-                    if (widget.lines.isNotEmpty) ...[
-                      const SizedBox(height: 24),
+                    // Amount
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: AppColors.shadowCard,
+                      ),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Jumlah',
+                            style: TextStyle(
+                              fontFamily: 'PlusJakartaSans',
+                              fontSize: 13,
+                              color: AppColors.slate500,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            CurrencyFormatter.format(widget.amount),
+                            style: const TextStyle(
+                              fontFamily: 'PlusJakartaSans',
+                              fontSize: 32,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.ink,
+                              letterSpacing: -0.6,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Detail lines
+                    if (widget.lines.isNotEmpty)
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppColors.bg,
-                          borderRadius: BorderRadius.circular(18),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: AppColors.shadowSoft,
                         ),
                         child: Column(
                           children: widget.lines.asMap().entries.map((e) {
@@ -92,9 +149,9 @@ class _SuccessPageState extends State<SuccessPage> {
                             final l = e.value;
                             return Column(
                               children: [
-                                if (i > 0) const Divider(height: 1, color: AppColors.line),
+                                if (i > 0) const Divider(height: 1, color: AppColors.line2),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 11),
+                                  padding: const EdgeInsets.symmetric(vertical: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -120,12 +177,11 @@ class _SuccessPageState extends State<SuccessPage> {
                           }).toList(),
                         ),
                       ),
-                    ],
-                    const Spacer(),
                   ],
                 ),
               ),
             ),
+            // Bottom buttons
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
               child: Column(
@@ -138,7 +194,7 @@ class _SuccessPageState extends State<SuccessPage> {
                   AppButton(
                     label: 'Bagikan bukti transaksi',
                     variant: AppButtonVariant.soft,
-                    icon: const Icon(Icons.copy_rounded, size: 18, color: AppColors.primary),
+                    icon: const Icon(DkgIcons.copy, size: 18, color: AppColors.primary),
                     onPressed: () {},
                   ),
                 ],

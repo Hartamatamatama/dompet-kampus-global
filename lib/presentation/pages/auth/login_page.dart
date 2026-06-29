@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/dkg_icons.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_field.dart';
@@ -29,43 +30,27 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _loginWithGoogle() async {
     setState(() => _gLoading = true);
     try {
-      debugPrint('[Auth] Google sign-in: memulai...');
       final googleSignIn = GoogleSignIn();
-      // Keluar dari sesi Google yang ter-cache agar dialog pilih akun selalu muncul
       await googleSignIn.signOut();
       final googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
-        debugPrint('[Auth] Google sign-in: dibatalkan user');
         setState(() => _gLoading = false);
         return;
       }
-      debugPrint('[Auth] Google sign-in: akun dipilih → ${googleUser.email}');
-
       final googleAuth = await googleUser.authentication;
-      debugPrint(
-          '[Auth] Google auth: accessToken=${googleAuth.accessToken != null ? "OK" : "NULL"}, '
-          'idToken=${googleAuth.idToken != null ? "OK" : "NULL"}');
-
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
       final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-      debugPrint('[Auth] Firebase sign-in OK → uid=${userCredential.user?.uid}');
-
       final idToken = await userCredential.user?.getIdToken();
-      debugPrint(
-          '[Auth] Firebase ID token: ${idToken != null ? "OK (${idToken.length} chars)" : "NULL"}');
-
       if (idToken != null && mounted) {
-        debugPrint('[Auth] Kirim token ke backend → POST /v1/auth/verify-token');
         context.read<AuthBloc>().add(AuthLoginWithFirebase(idToken));
       }
-    } catch (e, st) {
-      debugPrint('[Auth] Google sign-in ERROR: $e\n$st');
+    } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login Google gagal: $e')),
+          SnackBar(content: Text('Login Google gagal'), backgroundColor: AppColors.red),
         );
       }
     } finally {
@@ -86,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message ?? 'Login gagal.')),
+          SnackBar(content: Text(e.message ?? 'Login gagal.'), backgroundColor: AppColors.red),
         );
       }
     }
@@ -107,93 +92,63 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.bg,
         body: SafeArea(
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  icon: const Icon(DkgIcons.arrowLeft, color: AppColors.ink),
-                  onPressed: () => context.go('/'),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Gradient header
+                Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(32),
+                      bottomRight: Radius.circular(32),
+                    ),
+                  ),
+                  padding: EdgeInsets.fromLTRB(
+                    24, MediaQuery.of(context).padding.top + 24, 24, 40,
+                  ),
+                  child: Column(
+                    children: [
+                      const AppLogo(size: 64, light: true, withText: true),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Selamat datang kembali',
+                        style: TextStyle(
+                          fontFamily: 'PlusJakartaSans',
+                          fontSize: 15,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(26, 10, 26, 24),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const AppLogo(size: 50),
-                      const SizedBox(height: 22),
-                      const Text('Masuk',
-                          style: TextStyle(
-                            fontFamily: 'PlusJakartaSans',
-                            fontSize: 27,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.ink,
-                            letterSpacing: -0.4,
-                          )),
-                      const SizedBox(height: 6),
-                      const Text('Selamat datang kembali',
-                          style: TextStyle(fontSize: 14.5, color: AppColors.slate500)),
-                      const SizedBox(height: 24),
-                      // Google sign in
+                      // Google button
                       BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
                           final loading = state is AuthLoading || _gLoading;
-                          return GestureDetector(
-                            onTap: loading ? null : _loginWithGoogle,
-                            child: Container(
-                              height: 54,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(color: AppColors.line, width: 1.5),
-                                boxShadow: AppColors.shadowSoft,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: loading
-                                    ? const [
-                                        SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2.4,
-                                            valueColor: AlwaysStoppedAnimation(AppColors.primary),
-                                          ),
-                                        ),
-                                        SizedBox(width: 11),
-                                        Text('Menghubungkan…',
-                                            style: TextStyle(
-                                              fontFamily: 'PlusJakartaSans',
-                                              fontSize: 15.5,
-                                              fontWeight: FontWeight.w700,
-                                            )),
-                                      ]
-                                    : const [
-                                        _GoogleIcon(),
-                                        SizedBox(width: 11),
-                                        Text('Lanjut dengan Google',
-                                            style: TextStyle(
-                                              fontFamily: 'PlusJakartaSans',
-                                              fontSize: 15.5,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.ink,
-                                            )),
-                                      ],
-                              ),
-                            ),
+                          return AppButton(
+                            label: 'Lanjut dengan Google',
+                            onPressed: loading ? null : _loginWithGoogle,
+                            variant: AppButtonVariant.outline,
+                            icon: _GoogleIcon(),
+                            isLoading: loading,
                           );
                         },
                       ),
-                      const SizedBox(height: 22),
+                      const SizedBox(height: 20),
                       Row(children: [
                         const Expanded(child: Divider(color: AppColors.line)),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: const Text('atau email',
+                          child: Text('atau email',
                               style: TextStyle(
                                 fontFamily: 'PlusJakartaSans',
                                 fontSize: 12.5,
@@ -203,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         const Expanded(child: Divider(color: AppColors.line)),
                       ]),
-                      const SizedBox(height: 22),
+                      const SizedBox(height: 20),
                       AppField(
                         label: 'Email',
                         value: _email,
@@ -239,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                               )),
                         ),
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 4),
                       BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) => AppButton(
                           label: 'Masuk',
@@ -247,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                           isLoading: state is AuthLoading,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -268,8 +223,8 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -282,8 +237,8 @@ class _GoogleIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 21,
-      height: 21,
+      width: 20,
+      height: 20,
       child: Image.network(
         'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/24px-Google_%22G%22_logo.svg.png',
         errorBuilder: (_, __, ___) =>

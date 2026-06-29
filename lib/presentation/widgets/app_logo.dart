@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/dkg_icons.dart';
 
 class AppLogo extends StatelessWidget {
   final double size;
@@ -12,11 +13,26 @@ class AppLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     const fontFamily = 'PlusJakartaSans';
 
-    Widget icon = Image.asset(
-      'assets/images/logo-dompet.png',
+    Widget icon = Container(
       width: size,
       height: size,
-      fit: BoxFit.contain,
+      decoration: BoxDecoration(
+        gradient: light
+            ? LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [AppColors.goldLight, AppColors.gold, Color(0xFFB8943F)],
+              )
+            : AppColors.primaryGradient,
+        borderRadius: BorderRadius.circular(size * 0.22),
+      ),
+      child: Center(
+        child: Icon(
+          DkgIcons.wallet,
+          size: size * 0.5,
+          color: Colors.white,
+        ),
+      ),
     );
 
     if (!withText) return icon;

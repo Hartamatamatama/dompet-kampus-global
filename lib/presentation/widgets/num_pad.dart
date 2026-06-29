@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
+import 'feature_icon.dart';
 
 class NumPad extends StatelessWidget {
   final ValueChanged<String> onKey;
@@ -17,7 +18,7 @@ class NumPad extends StatelessWidget {
       children: keys.map((k) {
         Widget child;
         if (k == 'del') {
-          child = const Icon(Icons.arrow_back_ios_rounded, size: 22, color: AppColors.slate600);
+          child = const Icon(DkgIcons.arrowLeft, size: 22, color: AppColors.slate600);
         } else {
           child = Text(
             k,

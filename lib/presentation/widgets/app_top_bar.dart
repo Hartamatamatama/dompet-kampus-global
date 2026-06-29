@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/dkg_icons.dart';
 
 class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback? onBack;
   final List<Widget>? actions;
+  final Widget? trailing;
 
-  const AppTopBar({super.key, required this.title, this.onBack, this.actions});
+  const AppTopBar({
+    super.key,
+    required this.title,
+    this.onBack,
+    this.actions,
+    this.trailing,
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight + 8);
@@ -19,7 +27,15 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0,
       leading: onBack != null
           ? IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: AppColors.ink),
+              icon: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: AppColors.primarySurface,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(DkgIcons.arrowLeft, size: 18, color: AppColors.primary),
+              ),
               onPressed: onBack,
             )
           : null,
@@ -35,8 +51,11 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       actions: actions,
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(1),
-        child: Container(height: 1, color: AppColors.line2),
+        preferredSize: const Size.fromHeight(0),
+        child: Container(
+          height: 0,
+          color: AppColors.line2,
+        ),
       ),
     );
   }
