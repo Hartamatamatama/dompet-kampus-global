@@ -1,3 +1,5 @@
+Use case: exchange Firebase ID token for a backend JWT.
+===
 import '../../repositories/auth_repository.dart';
 import '../../entities/user_entity.dart';
 
