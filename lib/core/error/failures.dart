@@ -10,6 +10,7 @@ abstract class Failure extends Equatable {
   List<Object?> get props => [message];
 }
 
+/// Failure from the server layer (HTTP 4xx/5xx).
 class ServerFailure extends Failure {
   final String? errorCode;
   const ServerFailure(super.message, {this.errorCode});
