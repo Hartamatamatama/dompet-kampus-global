@@ -41,7 +41,7 @@ class _SuccessPageState extends State<SuccessPage>
     );
     _slideUp = CurvedAnimation(
       parent: _ctrl,
-      curve: const Interval(0.2, 1.0, curve: Curves.easeOutBack),
+      curve: const Interval(0.2, 1.0, curve: Curves.easeOutCubic),
     );
     _ctrl.forward();
   }
