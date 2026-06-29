@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> {
       {'icon': DkgIcons.topup, 'label': 'Top Up', 'tone': 'blue', 'route': '/topup'},
       {'icon': DkgIcons.send, 'label': 'Transfer', 'tone': 'green', 'route': '/transfer'},
       {'icon': DkgIcons.qris, 'label': 'Bayar', 'tone': 'violet', 'route': '/payment'},
-      {'icon': Icons.south_rounded, 'label': 'Tarik', 'tone': 'amber', 'route': '/topup'},
+      {'icon': DkgIcons.arrowRight, 'label': 'Tarik', 'tone': 'amber', 'route': '/topup'},
     ];
 
     return Container(
@@ -363,12 +363,12 @@ class _HomePageState extends State<HomePage> {
   Widget _buildFeatureGrid() {
     final features = [
       {'icon': DkgIcons.pulsa, 'label': 'Pulsa', 'tone': 'blue'},
-      {'icon': Icons.bolt_outlined, 'label': 'PLN', 'tone': 'amber'},
+      {'icon': DkgIcons.bill, 'label': 'PLN', 'tone': 'amber'},
       {'icon': DkgIcons.food, 'label': 'Kantin', 'tone': 'red'},
       {'icon': DkgIcons.splitBill, 'label': 'UKT', 'tone': 'violet'},
-      {'icon': Icons.wifi_rounded, 'label': 'Paket Data', 'tone': 'green'},
+      {'icon': DkgIcons.phone, 'label': 'Paket Data', 'tone': 'green'},
       {'icon': DkgIcons.gift, 'label': 'Voucher', 'tone': 'red'},
-      {'icon': Icons.favorite_outline_rounded, 'label': 'Donasi', 'tone': 'amber'},
+      {'icon': DkgIcons.gift, 'label': 'Donasi', 'tone': 'amber'},
       {'icon': DkgIcons.more, 'label': 'Lainnya', 'tone': 'slate'},
     ];
     return Container(

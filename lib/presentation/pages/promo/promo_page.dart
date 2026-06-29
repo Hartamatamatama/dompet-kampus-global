@@ -11,7 +11,7 @@ class PromoPage extends StatelessWidget {
     final promos = [
       {'t': 'Cashback 30% di Kantin Kampus', 'd': 'Maks. Rp10.000 · s.d. 30 Jun', 'tone': 'red', 'icon': DkgIcons.food},
       {'t': 'Gratis biaya transfer antarbank', 'd': 'Setiap Jumat · semua bank', 'tone': 'green', 'icon': DkgIcons.send},
-      {'t': 'Diskon UKT 0% cicilan 6 bulan', 'd': 'Khusus pengguna baru', 'tone': 'violet', 'icon': DkgIcons.splitBill},
+      {'t': 'Diskon UKT 0% cicilan 6 bulan', 'd': 'Khusus pengguna baru', 'tone': 'violet', 'icon': DkgIcons.bill},
       {'t': 'Bonus 5.000 poin top up pertama', 'd': 'Min. Rp50.000', 'tone': 'amber', 'icon': DkgIcons.star},
     ];
 
