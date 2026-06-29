@@ -1,3 +1,5 @@
+Use case: request an OTP code to be sent.
+===
 import '../../repositories/otp_repository.dart';
 import '../../entities/otp_entity.dart';
 
