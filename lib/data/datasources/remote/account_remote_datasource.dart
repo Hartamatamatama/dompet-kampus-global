@@ -1,3 +1,5 @@
+Remote data source for account operations (balance, transactions).
+===
 import '../../../core/constants/api_endpoints.dart';
 import '../../../core/network/api_client.dart';
 import '../../models/account_model.dart';
